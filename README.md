@@ -46,6 +46,7 @@ image:
      Run `docker build -t bucketland/go-rest-api-kubernetes-example:latest .` to build image. Then use dockerhub desktop or run `docker push bucketland/go-rest-api-kubernetes-example:latest` to push. After pushing image to dockerhub, we are able to run it without any configuration.
 
 # Helm:
+## Usage
 Create a myValues.yaml file to store API key like:
 ```
 youtubeStatsSettings:
@@ -57,6 +58,25 @@ youtubeStatsSettings:
  Run ` helm upgrade youtube-stats -f [myValues.yaml] [youtube-stats-chart]` to upgrade it when changes applied.
 
  Then go to powershell run `kubectl get all` and you are able to see all the resource you create.
+ 
+ ## How to use Helm:
+ If wanna redo helm part, you can delete charts folder and regenerate helm charts.
+ ```
+ mkdir charts
+ cd charts
+ helm create youtube-stats-chart
+ ```
+ 
+ Then go to template/deployment.yaml. In container part, add
+ 
+ ```
+ envFrom:
+   - secretRef:
+       name: {{ include "youtube-stats-chart.fullname" . }}-secrets
+ ```
+ Then create secretes.yaml in the same folder as a template for generating secret object. The content was shown in this project.
+ 
+ Finnally go to values.yaml and configure everything.
 
 # Reference:
 https://github.com/askcloudarchitech/go-rest-api-kubernetes-example
