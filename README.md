@@ -74,9 +74,10 @@ youtubeStatsSettings:
    - secretRef:
        name: {{ include "youtube-stats-chart.fullname" . }}-secrets
  ```
- Then create secretes.yaml in the same folder as a template for generating secret object. The content was shown in this project.
+ Then change path of livenessProbe and readinessProbe to /youtube/channel/stats, change ports to 10101.
+ Create secretes.yaml in the same folder as a template for generating secret object. The content was shown in this project.
  
- Finnally go to values.yaml and configure everything.
+ Finnally go to values.yaml configure everything and go to Chart.yaml to give it a nice version name.
 
 # Reference:
 https://github.com/askcloudarchitech/go-rest-api-kubernetes-example
